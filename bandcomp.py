@@ -62,11 +62,11 @@ else:
             arcpy.CompositeBands_management(blue+';'+green+';'+red,outpath)
             #in each band, make 0 to NoData
             outRas = arcpy.SetRasterProperties_management(outpath,"GENERIC","","",[["1",0],["2",0],["3",0]])
-'''
+
 ###MOSAIC process, comment out the following codes if you do not want to create mosaic.
     ##4. Type in the new folder name for mosaic imagery, and the file path where you want the new folder to be located
     mosaicFolderName = "mosaic"
-    MosaicFolder = os.path.join('D:\FastIce\imagery\L7data',mosaicFolderName)
+    MosaicFolder = os.path.join(directory,mosaicFolderName)
     #if the folder name does not exist, create new folder and keep going.
     if os.path.exists(MosaicFolder):
         print "Folder name already exists."
@@ -74,9 +74,10 @@ else:
         os.makedirs(MosaicFolder)
         ##5. type in the parameters for mosaic
         compMosaic = ";".join(comp)
-        mosaicName = "MosaicComp1.tif"
+        print compMosaic
+        mosaicName = "MosaicComp.tif"
         coordinate = ""
-        pixelType = "8_BIT_UNSIGNED"
+        pixelType = "16_BIT_UNSIGNED"
         cellSize = "30"
         numberBand = "3"
         method = "MEAN"
@@ -84,5 +85,5 @@ else:
 
         if not os.path.exists(os.path.join(MosaicFolder,mosaicName)):
             Mosaic = arcpy.MosaicToNewRaster_management(compMosaic,MosaicFolder,mosaicName,coordinate,pixelType,
-                                                    cellSize,numberBand,method,colorMode)'''
+                                                    cellSize,numberBand,method,colorMode)
 arcpy.CheckInExtension("Spatial")
